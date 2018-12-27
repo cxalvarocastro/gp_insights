@@ -7,23 +7,6 @@ df <- read.csv("C:/Users/alvar/OneDrive/Escritorio/GP/Bases/gp_export_insights.c
                encoding = "UTF-8",
                na.strings = c(""," "))
 
-#We join the sub brands to general brands
-df <- df %>%
-  mutate(brand_gral = case_when(gp_marca_insights %in% c("EXPLOREAN") ~ "EXPLOREAN",
-                                gp_marca_insights %in% c("FA CIUDAD","FA PLAYA") ~ "FA",
-                                gp_marca_insights %in% c("FIESTA INN","FIESTA INN LOFT") ~ "FIESTA INN",
-                                gp_marca_insights %in% c("GAMMA FA") ~ "GAMMA FA",
-                                gp_marca_insights %in% c("GRAND FA CIUDAD","GRAND FA PLAYA") ~ "GRAND FA",
-                                gp_marca_insights %in% c("LIVE AQUA","LIVE AQUA CIUDAD","LIVE AQUA PLAYA") ~ "LIVE AQUA",
-                                gp_marca_insights %in% c("ONE") ~ "ONE"))
-
-
-
-df_count <- df %>%
-  group_by(brand_gral,gp_marca_insights) %>%
-  summarise(count = n()) %>%
-  mutate(pc= count*100/sum(count))
-
 
 #we drop the records with marca in "FIESTA INN LOFT","LIVE AQUA"
 df <- df %>% filter(!gp_marca_insights %in% c("FIESTA INN LOFT","LIVE AQUA"))
@@ -32,8 +15,8 @@ df <- df %>% filter(!gp_marca_insights %in% c("FIESTA INN LOFT","LIVE AQUA"))
 var_enum <- df[,c(146,9,15:26,33,35,105:121,125:136)]
 var_cate <- df[,c(146,27:32,34,36:104,138:139)]
 
-#we verify which variables have at least 70% of non NA values
-var_index_enum <- as.character()
+
+var_index_enum <- character()
 for(i in 2:length(colnames(var_enum))){
   
   l_all <- length(var_enum[,1])
@@ -46,7 +29,8 @@ for(i in 2:length(colnames(var_enum))){
   
 }
 
-var_index_cate <- as.character()
+
+var_index_cate <- character()
 for(i in 2:length(colnames(var_cate))){
   
   l_all <- length(var_cate[,1])
@@ -59,11 +43,12 @@ for(i in 2:length(colnames(var_cate))){
   
 }
 
-#we drop the variables that do not match the condition
+
+#we drop the rows with more than 30% NA's
 df_var_enum <- var_enum[,as.numeric(c(1,var_index_enum))]
 df_var_cate <- var_cate[,as.numeric(c(1,var_index_cate))]
 
-summary(df_var_enum)
+
 
 #as we can see the variable gp_conexion_internet has "No lo usé" (did not use it) values
 #we will remove the records with this value
@@ -78,7 +63,7 @@ df_inpute_enum <- preProcess(df_var_enum[,-1], method = "medianImpute")
 df_var_enum_fxd <- predict(df_inpute_enum,df_var_enum)
 
 summary(df_var_enum_fxd)
-str(df_var_enum_fxd)
+
 
 #we change Sí & Male to 1 and No & Female to 0
 df_var_cate[,-1] <-lapply(df_var_cate[,-1], function(col){
@@ -100,34 +85,57 @@ summary(df_var_cate_fxd)
 
 #we make an inner join to have numeric and categorical variables in the same df
 df_cleaned <- merge(df_var_enum_fxd,df_var_cate_fxd,by = "surveyid")
-df_cleaned <- df_cleaned[,c(1,3,5,2,4,6:28)]
+df_cleaned <- df_cleaned[,c(1,3,5,4,2,6:28)]
 
 
-#Lets split the clenaed df into targets df & predictors df
-df_targets <- df_cleaned[,2:3]
-df_predictors<- df_cleaned[,4:28]
+#Lets split the cleaned df into targets df & predictors df
+df_targets <- df_cleaned[,2:4]
+df_predictors<- df_cleaned[,5:28]
 
 #we look at the correlation between the predictors
 correlation <- cor(df_predictors) 
 summary(correlation[upper.tri(correlation)])
 
-#we remove the variables correlated more than .7
-highlyCor <- findCorrelation(correlation, cutoff = .7)
-df_predictors_filtered <- df_predictors[,-highlyCor]
+#we remove the variables correlated more than .7 & .8
+highlyCor_7 <- findCorrelation(correlation, cutoff = .7)
+highlyCor_8 <- findCorrelation(correlation, cutoff = .8)
 
-#with the below commented code we can see the difference when removing the correlated variables
-#corr2 <- cor(df_predictors_filtered)
-#summary(corr2[upper.tri(corr2)])
+predictors_7 <- names(df_predictors[,highlyCor_7])
+predictors_8 <- names(df_predictors[,highlyCor_8])
 
-#we verify possible linear combination
-findLinearCombos(df_predictors_filtered)
+
+df_predictors_filtered_7 <- df_predictors[,-highlyCor_7]
+df_predictors_filtered_8 <- df_predictors[,-highlyCor_8]
+
+#we look at the correlation after we droped the correlated predictors
+corr_7 <- cor(df_predictors_filtered_7)
+corr_8 <- cor(df_predictors_filtered_8)
+
 
 #lets scale all the predictors because the 0 & 1 values and the 0 to 10 ones
-#we will make the model using the scaled and non scaled predictors
-preProcValues <- preProcess(df_predictors_filtered, method = c("center", "scale"))
-df_transformed <- predict(preProcValues, df_predictors_filtered)
+preProcValues_7 <- preProcess(df_predictors_filtered_7, method = c("center", "scale"))
+df_transformed_7 <- predict(preProcValues_7, df_predictors_filtered_7)
 
-summary(df_transformed)
+preProcValues_8 <- preProcess(df_predictors_filtered_8, method = c("center", "scale"))
+df_transformed_8 <- predict(preProcValues_8, df_predictors_filtered_8)
 
-df_gral_final_ltr <- cbind(ltr = df_targets[,1],df_transformed)
-df_gral_final_nrs <- cbind(nrs = df_targets[,2],df_transformed)
+# we generate the cleaned df for each target variable
+#ltr
+df_ltr_model_7 <- cbind(ltr=df_targets[,1],df_transformed_7)
+df_ltr_model_8 <- cbind(ltr=df_targets[,1],df_transformed_8)
+
+#nrs
+df_nrs_model_7 <- cbind(nrs=df_targets[,2],df_transformed_7)
+df_nrs_model_8 <- cbind(nrs=df_targets[,2],df_transformed_8)
+
+#sat
+df_sat_model_7 <- cbind(sat=df_targets[,3],df_transformed_7)
+df_sat_model_8 <- cbind(sat=df_targets[,3],df_transformed_8)
+
+#we remove all the objects but the las 6 defined in this script to save RAM
+list_no_remove <-     c("df_ltr_model_7","df_ltr_model_8",
+                        "df_nrs_model_7","df_nrs_model_8",
+                        "df_sat_model_7","df_sat_model_8")
+
+rm(list=setdiff(ls(), list_no_remove))
+

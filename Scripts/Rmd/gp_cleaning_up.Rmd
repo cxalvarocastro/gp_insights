@@ -10,12 +10,7 @@ output:
 library(dplyr)
 library(caret)
 library(DT)
-
-setwd("C:/Users/alvar/OneDrive/Escritorio/")
-
 ```
-
-
 
 
 
@@ -26,36 +21,8 @@ df <- read.csv("C:/Users/alvar/OneDrive/Escritorio/GP/Bases/gp_export_insights.c
               encoding = "UTF-8",
               na.strings = c(""," "))
 
-#We join the sub brands to general brands
-df <- df %>%
- mutate(brand_gral = case_when(gp_marca_insights %in% c("EXPLOREAN") ~ "EXPLOREAN",
-                               gp_marca_insights %in% c("FA CIUDAD","FA PLAYA") ~ "FA",
-                               gp_marca_insights %in% c("FIESTA INN","FIESTA INN LOFT") ~ "FIESTA INN",
-                               gp_marca_insights %in% c("GAMMA FA") ~ "GAMMA FA",
-                               gp_marca_insights %in% c("GRAND FA CIUDAD","GRAND FA PLAYA") ~ "GRAND FA",
-                               gp_marca_insights %in% c("LIVE AQUA","LIVE AQUA CIUDAD","LIVE AQUA PLAYA") ~ "LIVE AQUA",
-                               gp_marca_insights %in% c("ONE") ~ "ONE"))
 ```
 
-Table to identify representative brands:
-
-```{r representative brands, include=T, echo=T}
-
-
-df_count <- df %>%
- group_by(brand_gral,gp_marca_insights) %>%
- summarise(count = n()) %>%
- mutate(pc= round(count*100/sum(count),2))
-```
-
-
-```{r representative brands DT , include=T, echo=F}
-
-DT::datatable(df_count,options = list(
-  pageLength = 8,
-  lengthMenu = c(8, 16)
-)) 
-```
 
 ```{r droping brands, include=F}
 #Drop the records with brand in "FIESTA INN LOFT","LIVE AQUA"
@@ -63,13 +30,15 @@ df <- df %>% filter(!gp_marca_insights %in% c("FIESTA INN LOFT","LIVE AQUA"))
 
 ```
 
+
 ```{r Drop >30 percent NAs rows, include=F}
 
 #we separate the numeric and categorical variables
 var_enum <- df[,c(146,9,15:26,33,35,105:121,125:136)]
 var_cate <- df[,c(146,27:32,34,36:104,138:139)]
 
-var_index_enum <- as.character()
+
+var_index_enum <- character()
 for(i in 2:length(colnames(var_enum))){
 
   l_all <- length(var_enum[,1])
@@ -79,10 +48,11 @@ for(i in 2:length(colnames(var_enum))){
       var_index_enum <- append(var_index_enum,i)
       
     }
-
+ 
 }
 
-var_index_cate <- as.character()
+
+var_index_cate <- character()
 for(i in 2:length(colnames(var_cate))){
   
   l_all <- length(var_cate[,1])
@@ -94,13 +64,14 @@ for(i in 2:length(colnames(var_cate))){
   }
   
 }
+    
 
 #we drop the rows with more than 30% NA's
 df_var_enum <- var_enum[,as.numeric(c(1,var_index_enum))]
 df_var_cate <- var_cate[,as.numeric(c(1,var_index_cate))]
 ```
 
-Once we drop the non representative brands we just keep the variables with at least 70% of non NAs values.
+The first step is just keep the variables with at least 70% of non NAs values. This is the summary for these variables.
 
 ```{r summary 30 percent NAs rows, include=T, echo=F}
 summary(df_var_enum)
@@ -159,12 +130,14 @@ summary(df_var_cate_fxd)
 
 #we make an inner join to have numeric and categorical variables in the same df
 df_cleaned <- merge(df_var_enum_fxd,df_var_cate_fxd,by = "surveyid")
-df_cleaned <- df_cleaned[,c(1,3,5,2,4,6:28)]
+df_cleaned <- df_cleaned[,c(1,3,5,4,2,6:28)]
 
 
 #Lets split the cleaned df into targets df & predictors df
-df_targets <- df_cleaned[,2:3]
-df_predictors<- df_cleaned[,4:28]
+df_targets <- df_cleaned[,2:4]
+df_predictors<- df_cleaned[,5:28]
+
+
 ```
 
 Then we look at the correlation between our predictors:
@@ -175,26 +148,54 @@ correlation <- cor(df_predictors)
 summary(correlation[upper.tri(correlation)])
 ```
 
-We drop the variables correlated in more than 0.7
+We get the list of  the variables correlated in more than 0.7 and one other list with the variables correlated in more than 0.8
 
 ```{r correlation 2 ,include=T, echo=T}
-#we remove the variables correlated more than .7
-highlyCor <- findCorrelation(correlation, cutoff = .7)
-df_predictors_filtered <- df_predictors[,-highlyCor]
+#we remove the variables correlated more than .7 & .8
+highlyCor_7 <- findCorrelation(correlation, cutoff = .7)
+highlyCor_8 <- findCorrelation(correlation, cutoff = .8)
+```
 
-corr2 <- cor(df_predictors_filtered)
-summary(corr2[upper.tri(corr2)])
+```{r correlation 3 ,include=F, echo=F}
+predictors_7 <- names(df_predictors[,highlyCor_7])
+predictors_8 <- names(df_predictors[,highlyCor_8])
+
+
+df_predictors_filtered_7 <- df_predictors[,-highlyCor_7]
+df_predictors_filtered_8 <- df_predictors[,-highlyCor_8]
+
+corr_7 <- cor(df_predictors_filtered_7)
+corr_8 <- cor(df_predictors_filtered_8)
+```
+
+```{r correlation 4 ,include=T, echo=T}
+#This is the list for 0.7
+predictors_7
+```
+
+```{r correlation 5 ,include=T, echo=T}
+#This is the list for 0.8
+predictors_8
 ```
 
 Finally we sacale the variables to be comparable in the model.
 
-```{r correlation center, scale,include=T, echo=T}
+```{r correlation center, scale,include=F, echo=F}
 #lets scale all the predictors because the 0 & 1 values and the 0 to 10 ones
-#we will make the model using the scaled and non scaled predictors
-preProcValues <- preProcess(df_predictors_filtered, method = c("center", "scale"))
-df_transformed <- predict(preProcValues, df_predictors_filtered)
+preProcValues_7 <- preProcess(df_predictors_filtered_7, method = c("center", "scale"))
+df_transformed_7 <- predict(preProcValues_7, df_predictors_filtered_7)
 
-summary(df_transformed)
+preProcValues_8 <- preProcess(df_predictors_filtered_8, method = c("center", "scale"))
+df_transformed_8 <- predict(preProcValues_8, df_predictors_filtered_8)
+```
 
+```{r correlation center summary, scale,include=T, echo=T}
+#Summary for 0.7
+summary(df_transformed_7)
+```
+
+```{r correlation center summary 2, scale,include=T, echo=T}
+#Summary for 0.8
+summary(df_transformed_8)
 ```
 
