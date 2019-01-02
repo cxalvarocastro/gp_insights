@@ -1,3 +1,9 @@
+---
+title: "Most important predictors for main metrics."
+output: html_document
+---
+
+```{r all code, include=FALSE, echo=F}
 #Lets load the DFs we need for the models
 source("C:/Users/alvar/OneDrive/Escritorio/gp_insights/Scripts/Rscripts/gp_general_cleaning_up.R")
 
@@ -196,3 +202,99 @@ plot_sat_8 <- plot_ly(df_coef_sat_8, x = ~name, y = ~weight, type = "bar") %>%
 
 #################################### SAT ENDS #################################### 
 
+
+```
+
+Once we have cleaned our data set we will run the linear model for each metric considering two different sets of predictors, the ones correlated in no more than 0.7 and the ones correletaed in no more than 0.8
+
+###LTR
+
+Running the model we have these results:
+
+```{r 1st ltr model 7, include=T,echo=T}
+summary(ltr_model_7)
+```
+
+
+```{r 1st ltr model 8, include=T,echo=T}
+summary(ltr_model_8)
+```
+
+
+Now we will remove the predictors with no significance and run the linear model again:
+
+```{r 2nd ltr model 7, include=T,echo=T}
+summary(lm_ltr_7)
+```
+
+```{r 2nd ltr model 8, include=T,echo=T}
+summary(lm_ltr_8)
+```
+
+
+We have now the predictors that fit better the model, let's take a look at the weight they have in the model for LTR with the below bar plots. The plots have a treshold line to identify which predictors impact LTR in more than 10%.
+
+
+
+```{r weights ltr 7, include=T,echo=F}
+plot_ltr_7
+```
+
+
+```{r weights ltr 8, include=T,echo=F}
+plot_ltr_8
+```
+
+
+We follow exactly the same steps to get weights and plots for NRS and Satisfaction having the results shown below:
+
+###NRS
+
+```{r 2nd nrs model 7, include=T,echo=T}
+summary(lm_nrs_7)
+```
+
+
+```{r 2nd nrs model 8, include=T,echo=T}
+summary(lm_nrs_8)
+```
+
+
+```{r weights nrs 7, include=T,echo=F}
+plot_nrs_7
+```
+
+
+```{r weights nrs 8, include=T,echo=F}
+plot_nrs_8
+```
+
+
+###Satisfaction
+
+```{r 2nd sat model 7, include=T,echo=T}
+summary(lm_sat_7)
+```
+
+
+```{r 2nd sat model 8, include=T,echo=T}
+summary(lm_sat_8)
+```
+
+
+```{r weights sat 7, include=T,echo=F}
+plot_sat_7
+```
+
+
+```{r weights sat 8, include=T,echo=F}
+plot_sat_8
+```
+
+
+
+Now that we have the variables that impact each main metric it is important to note that the weights previously plotted are not the values which the main metrics are impacted, for example for the LTR model - 0.7 we have that gp_experiencia_precio has a weight of 29% but the real impact that this variable has when someone answers a survey is smaller, these models help us identify the variables that most impact main metrics, but if we want to know the real impact on a main metric the model should consider all the variables in the survey.
+
+We can see that the selection of predictors has been good because each model has at least 0.7 on R2, we can work on improving this value but for the purpose of these models 0.7 is an acceptable value.
+
+There are some differences between the models with the correlation no greater than 0.7 and 0.8 since the 0.8 models admit more variables and in some cases as in the LTR model these variables have a considerable weight.
