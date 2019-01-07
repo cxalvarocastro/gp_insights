@@ -1,0 +1,298 @@
+---
+title: "Segmented linear models."
+output: html_document
+---
+```{r all code, include=F,echo=F}
+source("C:/Users/alvar/OneDrive/Escritorio/gp_insights/Scripts/Rscripts/gp_segmented_linear_models.R")
+```
+
+In this document we will show the models for LTR, NRS & OSat segmented by Brand & Purpose of stay, each model will be shown as a quick summary with a graphic visualization.
+
+###Brands - LTR.
+
+```{r ltr brand 1,include=T,echo=T}
+names(summ_list_lm_ltr_brand_sig)[1]
+summ_list_lm_ltr_brand_sig[[brands[1]]]
+list_plots_ltr_brand[[brands[1]]]
+```
+
+
+```{r ltr brand 2,include=T,echo=T}
+names(summ_list_lm_ltr_brand_sig)[2]
+summ_list_lm_ltr_brand_sig[[brands[2]]]
+list_plots_ltr_brand[[brands[2]]]
+```
+
+
+```{r ltr brand 3,include=T,echo=T}
+names(summ_list_lm_ltr_brand_sig)[3]
+summ_list_lm_ltr_brand_sig[[brands[3]]]
+list_plots_ltr_brand[[brands[3]]]
+```
+
+
+```{r ltr brand 4,include=T,echo=T}
+names(summ_list_lm_ltr_brand_sig)[4]
+summ_list_lm_ltr_brand_sig[[brands[4]]]
+list_plots_ltr_brand[[brands[4]]]
+```
+
+
+```{r ltr brand 5,include=T,echo=T}
+names(summ_list_lm_ltr_brand_sig)[5]
+summ_list_lm_ltr_brand_sig[[brands[5]]]
+list_plots_ltr_brand[[brands[5]]]
+```
+
+
+```{r ltr brand 6,include=T,echo=T}
+names(summ_list_lm_ltr_brand_sig)[6]
+summ_list_lm_ltr_brand_sig[[brands[6]]]
+list_plots_ltr_brand[[brands[6]]]
+```
+
+
+```{r ltr brand 7,include=T,echo=T}
+names(summ_list_lm_ltr_brand_sig)[7]
+summ_list_lm_ltr_brand_sig[[brands[7]]]
+list_plots_ltr_brand[[brands[7]]]
+```
+
+
+```{r ltr brand 8,include=T,echo=T}
+names(summ_list_lm_ltr_brand_sig)[8]
+summ_list_lm_ltr_brand_sig[[brands[8]]]
+list_plots_ltr_brand[[brands[8]]]
+```
+
+
+```{r ltr brand 9,include=T,echo=T}
+names(summ_list_lm_ltr_brand_sig)[9]
+summ_list_lm_ltr_brand_sig[[brands[9]]]
+list_plots_ltr_brand[[brands[9]]]
+```
+
+
+```{r ltr brand 10,include=T,echo=T}
+names(summ_list_lm_ltr_brand_sig)[10]
+summ_list_lm_ltr_brand_sig[[brands[10]]]
+list_plots_ltr_brand[[brands[10]]]
+```
+
+
+
+###Brands - NRS.
+
+```{r nrs brand 1,include=T,echo=T}
+names(summ_list_lm_nrs_brand_sig)[1]
+summ_list_lm_nrs_brand_sig[[brands[1]]]
+list_plots_nrs_brand[[brands[1]]]
+```
+
+
+```{r nrs brand 2,include=T,echo=T}
+names(summ_list_lm_nrs_brand_sig)[2]
+summ_list_lm_nrs_brand_sig[[brands[2]]]
+list_plots_nrs_brand[[brands[2]]]
+```
+
+
+```{r nrs brand 3,include=T,echo=T}
+names(summ_list_lm_nrs_brand_sig)[3]
+summ_list_lm_nrs_brand_sig[[brands[3]]]
+list_plots_nrs_brand[[brands[3]]]
+```
+
+
+```{r nrs brand 4,include=T,echo=T}
+names(summ_list_lm_nrs_brand_sig)[4]
+summ_list_lm_nrs_brand_sig[[brands[4]]]
+list_plots_nrs_brand[[brands[4]]]
+```
+
+
+```{r nrs brand 5,include=T,echo=T}
+names(summ_list_lm_nrs_brand_sig)[5]
+summ_list_lm_nrs_brand_sig[[brands[5]]]
+list_plots_nrs_brand[[brands[5]]]
+```
+
+
+```{r nrs brand 6,include=T,echo=T}
+names(summ_list_lm_nrs_brand_sig)[6]
+summ_list_lm_nrs_brand_sig[[brands[6]]]
+list_plots_nrs_brand[[brands[6]]]
+```
+
+
+```{r nrs brand 7,include=T,echo=T}
+names(summ_list_lm_nrs_brand_sig)[7]
+summ_list_lm_nrs_brand_sig[[brands[7]]]
+list_plots_nrs_brand[[brands[7]]]
+```
+
+
+```{r nrs brand 8,include=T,echo=T}
+names(summ_list_lm_nrs_brand_sig)[8]
+summ_list_lm_nrs_brand_sig[[brands[8]]]
+list_plots_nrs_brand[[brands[8]]]
+```
+
+
+```{r nrs brand 9,include=T,echo=T}
+names(summ_list_lm_nrs_brand_sig)[9]
+summ_list_lm_nrs_brand_sig[[brands[9]]]
+list_plots_nrs_brand[[brands[9]]]
+```
+
+
+```{r nrs brand 10,include=T,echo=T}
+names(summ_list_lm_nrs_brand_sig)[10]
+summ_list_lm_nrs_brand_sig[[brands[10]]]
+list_plots_nrs_brand[[brands[10]]]
+```
+
+
+
+###Brands - OSat.
+
+```{r osat brand 1,include=T,echo=T}
+names(summ_list_lm_sat_brand_sig)[1]
+summ_list_lm_sat_brand_sig[[brands[1]]]
+list_plots_sat_brand[[brands[1]]]
+```
+
+
+```{r osat brand 2,include=T,echo=T}
+names(summ_list_lm_sat_brand_sig)[2]
+summ_list_lm_sat_brand_sig[[brands[2]]]
+list_plots_sat_brand[[brands[2]]]
+```
+
+
+```{r osat brand 3,include=T,echo=T}
+names(summ_list_lm_sat_brand_sig)[3]
+summ_list_lm_sat_brand_sig[[brands[3]]]
+list_plots_sat_brand[[brands[3]]]
+```
+
+
+```{r osat brand 4,include=T,echo=T}
+names(summ_list_lm_sat_brand_sig)[4]
+summ_list_lm_sat_brand_sig[[brands[4]]]
+list_plots_sat_brand[[brands[4]]]
+```
+
+
+```{r osat brand 5,include=T,echo=T}
+names(summ_list_lm_sat_brand_sig)[5]
+summ_list_lm_sat_brand_sig[[brands[5]]]
+list_plots_sat_brand[[brands[5]]]
+```
+
+
+```{r osat brand 6,include=T,echo=T}
+names(summ_list_lm_sat_brand_sig)[6]
+summ_list_lm_sat_brand_sig[[brands[6]]]
+list_plots_sat_brand[[brands[6]]]
+```
+
+
+```{r osat brand 7,include=T,echo=T}
+names(summ_list_lm_sat_brand_sig)[7]
+summ_list_lm_sat_brand_sig[[brands[7]]]
+list_plots_sat_brand[[brands[7]]]
+```
+
+
+```{r osat brand 8,include=T,echo=T}
+names(summ_list_lm_sat_brand_sig)[8]
+summ_list_lm_sat_brand_sig[[brands[8]]]
+list_plots_sat_brand[[brands[8]]]
+```
+
+
+```{r osat brand 9,include=T,echo=T}
+names(summ_list_lm_sat_brand_sig)[9]
+summ_list_lm_sat_brand_sig[[brands[9]]]
+list_plots_sat_brand[[brands[9]]]
+```
+
+
+```{r osat brand 10,include=T,echo=T}
+names(summ_list_lm_sat_brand_sig)[10]
+summ_list_lm_sat_brand_sig[[brands[10]]]
+list_plots_sat_brand[[brands[10]]]
+```
+
+
+
+###Purpose of stay - LTR.
+
+```{r ltr pos 1,include=T,echo=T}
+names(summ_list_lm_ltr_pos_sig)[1]
+summ_list_lm_ltr_pos_sig[[pos[1]]]
+list_plots_ltr_pos[[pos[1]]]
+```
+
+
+```{r ltr pos 2,include=T,echo=T}
+names(summ_list_lm_ltr_pos_sig)[2]
+summ_list_lm_ltr_pos_sig[[pos[2]]]
+list_plots_ltr_pos[[pos[2]]]
+```
+
+
+```{r ltr pos 3,include=T,echo=T}
+names(summ_list_lm_ltr_pos_sig)[3]
+summ_list_lm_ltr_pos_sig[[pos[3]]]
+list_plots_ltr_pos[[pos[3]]]
+```
+
+
+
+###Purpose of stay - NRS.
+
+```{r nrs pos 1,include=T,echo=T}
+names(summ_list_lm_nrs_pos_sig)[1]
+summ_list_lm_nrs_pos_sig[[pos[1]]]
+list_plots_nrs_pos[[pos[1]]]
+```
+
+
+```{r nrs pos 2,include=T,echo=T}
+names(summ_list_lm_nrs_pos_sig)[2]
+summ_list_lm_nrs_pos_sig[[pos[2]]]
+list_plots_nrs_pos[[pos[2]]]
+```
+
+
+```{r nrs pos 3,include=T,echo=T}
+names(summ_list_lm_nrs_pos_sig)[3]
+summ_list_lm_nrs_pos_sig[[pos[3]]]
+list_plots_nrs_pos[[pos[3]]]
+```
+
+
+
+###Purpose of stay - OSat.
+
+```{r osat pos 1,include=T,echo=T}
+names(summ_list_lm_sat_pos_sig)[1]
+summ_list_lm_sat_pos_sig[[pos[1]]]
+list_plots_sat_pos[[pos[1]]]
+```
+
+
+```{r osat pos 2,include=T,echo=T}
+names(summ_list_lm_sat_pos_sig)[2]
+summ_list_lm_sat_pos_sig[[pos[2]]]
+list_plots_sat_pos[[pos[2]]]
+```
+
+
+```{r osat pos 3,include=T,echo=T}
+names(summ_list_lm_sat_pos_sig)[3]
+summ_list_lm_sat_pos_sig[[pos[3]]]
+list_plots_sat_pos[[pos[3]]]
+```
