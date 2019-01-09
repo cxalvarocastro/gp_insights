@@ -1,5 +1,6 @@
 library(dplyr)
 library(caret)
+library(tidyr)
 
 #we read de data set
 df <- read.csv("C:/Users/alvar/OneDrive/Escritorio/GP/Bases/gp_export_insights.csv",
