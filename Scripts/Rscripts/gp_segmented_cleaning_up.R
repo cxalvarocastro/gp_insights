@@ -126,6 +126,9 @@ for(k in brands){
 
 
 #the code below look at the correlation and scale & centerpredictors
+##
+df_predictors_final_brand <- list()
+##
 list_dfs_scaled <- list()
 for(l in brands){
   
@@ -141,7 +144,9 @@ for(l in brands){
   ifelse(length(highlyCor_8)>0,
          df_predictors_filtered_8 <- bc[,-highlyCor_8],
          df_predictors_filtered_8 <- bc)
-  
+  ##
+  df_predictors_final_brand[[l]] <- df_predictors_filtered_8
+  ##
   #lets scale all the predictors
   preProcValues_8 <- preProcess(df_predictors_filtered_8, method = c("center", "scale"))
   df_predictors_8 <- predict(preProcValues_8, df_predictors_filtered_8)
@@ -271,6 +276,9 @@ for(k in purpose){
 
 
 #the code below look at the correlation and scale & centerpredictors
+##
+df_predictors_final_pos <- list()
+##
 list_dfs_scaled <- list()
 for(l in purpose){
   
@@ -286,7 +294,9 @@ for(l in purpose){
   ifelse(length(highlyCor_8)>0,
          df_predictors_filtered_8 <- bc[,-highlyCor_8],
          df_predictors_filtered_8 <- bc)
-  
+  ##
+  df_predictors_final_pos[[l]] <- df_predictors_filtered_8
+  ##
   #lets scale all the predictors
   preProcValues_8 <- preProcess(df_predictors_filtered_8, method = c("center", "scale"))
   df_predictors_8 <- predict(preProcValues_8, df_predictors_filtered_8)
@@ -327,6 +337,7 @@ for(m in purpose){
 #we remove all the objects but the las 6 defined in this script to save RAM
 list_no_remove <-     c("list_dfs_ltr_brand","list_dfs_nrs_brand",
                         "list_dfs_sat_brand","list_dfs_ltr_pos",
-                        "list_dfs_sat_pos","list_dfs_nrs_pos")
+                        "list_dfs_sat_pos","list_dfs_nrs_pos",
+                        "df_predictors_final_pos","df_predictors_final_brand")
 
 rm(list=setdiff(ls(), list_no_remove))

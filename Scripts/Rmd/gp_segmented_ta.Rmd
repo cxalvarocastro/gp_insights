@@ -1,0 +1,120 @@
+---
+title: "Text Analytics"
+output: html_document
+---
+
+```{r all code, include=F, echo=F}
+options(warn=-1)
+source("C:/Users/alvar/OneDrive/Escritorio/gp_insights/Scripts/Rscripts/gp_segmented_ta.R")
+```
+
+Words to exclude:
+
+```{r exclude list, include=T, echo=F}
+exclude
+```
+
+##General word cloud.
+
+```{r gral, include=T, echo=F}
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_gral_pro))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_gral_det,colorPalette = "Reds"))
+
+```
+
+###Word cloud by Brand.
+
+```{r brand 1 list, include=T, echo=F}
+brands[1]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_pro[[brands[1]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_det[[brands[1]]],colorPalette = "Reds"))
+```
+
+
+
+```{r brand 2 list, include=T, echo=F}
+brands[2]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_pro[[brands[2]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_det[[brands[2]]],colorPalette = "Reds"))
+```
+
+
+```{r brand 3 list, include=T, echo=F}
+brands[3]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_pro[[brands[3]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_det[[brands[3]]],colorPalette = "Reds"))
+```
+
+
+```{r brand 4 list, include=T, echo=F}
+brands[4]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_pro[[brands[4]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_det[[brands[4]]],colorPalette = "Reds"))
+```
+
+
+```{r brand 5 list, include=T, echo=F}
+brands[5]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_pro[[brands[5]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_det[[brands[5]]],colorPalette = "Reds"))
+```
+
+
+```{r brand 6 list, include=T, echo=F}
+brands[6]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_pro[[brands[6]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_det[[brands[6]]],colorPalette = "Reds"))
+```
+
+
+```{r brand 7 list, include=T, echo=F}
+brands[7]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_pro[[brands[7]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_det[[brands[7]]],colorPalette = "Reds"))
+```
+
+
+```{r brand 8 list, include=T, echo=F}
+brands[8]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_pro[[brands[8]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_det[[brands[8]]],colorPalette = "Reds"))
+```
+
+
+```{r brand 9 list, include=T, echo=F}
+brands[9]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_pro[[brands[9]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_det[[brands[9]]],colorPalette = "Reds"))
+```
+
+
+```{r brand 10 list, include=T, echo=F}
+brands[10]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_pro[[brands[10]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_brand_det[[brands[10]]],colorPalette = "Reds"))
+```
+
+
+
+###Word cloud by POS.
+
+
+```{r pos 1 list, include=T, echo=F}
+pos[1]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_pos_pro[[pos[1]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_pos_det[[pos[1]]],colorPalette = "Reds"))
+```
+
+
+```{r pos 2 list, include=T, echo=F}
+pos[2]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_pos_pro[[pos[2]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_pos_det[[pos[2]]],colorPalette = "Reds"))
+```
+
+
+```{r pos 3 list, include=T, echo=F}
+pos[3]
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_pos_pro[[pos[3]]]))
+suppressWarnings(wordcloudWithTable(createCleanTDM_ngram_ltr_pos_det[[pos[3]]],colorPalette = "Reds"))
+```
