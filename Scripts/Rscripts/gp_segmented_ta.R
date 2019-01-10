@@ -129,5 +129,5 @@ createCleanTDM_ngram_gral_det <- createCleanTDM_ngram(
   excludeWords = exclude)
 
 createCleanTDM_ngram_gral_pro <- createCleanTDM_ngram(
-  df_det,
+  df_pro,
   excludeWords = exclude)
